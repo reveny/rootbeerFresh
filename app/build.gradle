@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 
 buildscript {
     repositories {
@@ -25,6 +28,8 @@ android {
         targetSdkVersion targetSdkVer
         versionCode 10
         versionName "0.0.10"
+        vectorDrawables.useSupportLibrary = true
+        archivesBaseName = "rootbeerFresh-$versionName-[$versionCode]"
     }
 
     //check if the keystore details are defined in gradle.properties (this is so the key is not in github)
@@ -58,8 +63,18 @@ android {
 
 dependencies {
     implementation project(':LibRootbeerFresh')
-    implementation "com.android.support:appcompat-v7:$supportLibVer"
-    implementation "com.android.support:design:$supportLibVer"
-    implementation 'com.nineoldandroids:library:2.4.0'
-    implementation 'uk.co.barbuzz:beerprogressview:0.0.6'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+
+    implementation "androidx.core:core-ktx:$corektxVersion"
+
+    implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayoutVersion"
+    implementation "com.google.android.material:material:$materialDesignVersion"
+
+    implementation "com.nineoldandroids:library:$nineoldandroidsVersion"
+    implementation "uk.co.barbuzz:beerprogressview:$beerProgressViewVersion"
+
+    implementation "com.jakewharton.timber:timber:$timberVersion"
 }

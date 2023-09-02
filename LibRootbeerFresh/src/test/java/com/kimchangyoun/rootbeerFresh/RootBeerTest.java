@@ -2,13 +2,12 @@ package com.kimchangyoun.rootbeerFresh;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static junit.framework.Assert.assertFalse;
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.eq;
@@ -16,9 +15,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by matthew on 31/10/17.
- */
+
 @RunWith(MockitoJUnitRunner.class)
 public class RootBeerTest {
 
@@ -31,8 +28,7 @@ public class RootBeerTest {
 
         when(rootBeer.detectRootManagementApps()).thenReturn(false);
         when(rootBeer.detectPotentiallyDangerousApps()).thenReturn(false);
-        when(rootBeer.checkForBinary("busybox")).thenReturn(false);
-        when(rootBeer.checkForBinary("su")).thenReturn(false);
+        when(rootBeer.checkForBinary(Const.BINARY_SU)).thenReturn(false);
         when(rootBeer.checkForDangerousProps()).thenReturn(false);
         when(rootBeer.checkForRWPaths()).thenReturn(false);
         when(rootBeer.detectTestKeys()).thenReturn(false);
@@ -40,7 +36,7 @@ public class RootBeerTest {
         when(rootBeer.checkForRootNative()).thenReturn(false);
 
         // Test we return false when all methods return false
-        assertTrue(!rootBeer.isRooted());
+        assertFalse(rootBeer.isRooted());
 
         when(rootBeer.checkForRootNative()).thenReturn(true);
 
@@ -49,29 +45,26 @@ public class RootBeerTest {
     }
 
     @Test
-    public void testIsRootedWithoutBusyBoxCheck() {
+    public void testIsRootedWithBusyBoxCheck() {
 
         RootBeer rootBeer = Mockito.mock(RootBeer.class);
 
         when(rootBeer.isRooted()).thenCallRealMethod();
-        when(rootBeer.isRootedWithoutBusyBoxCheck()).thenCallRealMethod();
-
         when(rootBeer.detectRootManagementApps()).thenReturn(false);
         when(rootBeer.detectPotentiallyDangerousApps()).thenReturn(false);
-        when(rootBeer.checkForBinary("busybox")).thenReturn(true);
-        when(rootBeer.checkForBinary("su")).thenReturn(false);
+        when(rootBeer.checkForBinary(Const.BINARY_BUSYBOX)).thenReturn(true);
+        when(rootBeer.checkForBinary(Const.BINARY_SU)).thenReturn(false);
         when(rootBeer.checkForDangerousProps()).thenReturn(false);
         when(rootBeer.checkForRWPaths()).thenReturn(false);
         when(rootBeer.detectTestKeys()).thenReturn(false);
         when(rootBeer.checkSuExists()).thenReturn(false);
         when(rootBeer.checkForRootNative()).thenReturn(false);
 
-        // Test we return false when all methods return false
-        assertTrue(rootBeer.isRooted());
+        // Test we return false as busybox binary presence is ignored
+        assertFalse(rootBeer.isRooted());
 
-        // Test it doesn't matter what checkForBinary("busybox") returns
-        assertTrue(!rootBeer.isRootedWithoutBusyBoxCheck());
-
+        // Check busybox present is detected
+        assertTrue(rootBeer.checkForBinary(Const.BINARY_BUSYBOX));
     }
 
     @Test
@@ -95,7 +88,6 @@ public class RootBeerTest {
     }
 
     /**
-     *
      * @param packageNameToFind - We will pretend packagemanager has this package installed, can be null for no packages installed
      * @return - Mocked Context with mocked Packagemanager
      * @throws PackageManager.NameNotFoundException
@@ -105,11 +97,10 @@ public class RootBeerTest {
         PackageManager packageManager = Mockito.mock(PackageManager.class);
         when(context.getPackageManager()).thenReturn(packageManager);
 
-        if (packageManager == null){
+        if (packageManager == null) {
             // Return exception for all packages
             when(packageManager.getPackageInfo(anyString(), anyInt())).thenThrow(new PackageManager.NameNotFoundException());
-        }
-        else {
+        } else {
             // Return exception for every package other than one we should detect
             when(packageManager.getPackageInfo(not(eq(packageNameToFind)), anyInt())).thenThrow(new PackageManager.NameNotFoundException());
         }
@@ -164,7 +155,13 @@ public class RootBeerTest {
 
         // Should be true as package detected
         assertTrue(rootBeer.detectRootCloakingApps());
+    }
 
+    @Test
+    public void testAllSuPathsEndWithSlash() {
+        for (String path : Const.getPaths()) {
+            assertTrue(path.endsWith("/"));
+        }
     }
 
 }
