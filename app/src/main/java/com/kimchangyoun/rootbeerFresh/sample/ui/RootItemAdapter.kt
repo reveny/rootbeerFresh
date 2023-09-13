@@ -1,13 +1,17 @@
-package com.scottyab.rootbeer.sample.ui
+package com.kimchangyoun.rootbeerFresh.sample.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
-import com.scottyab.rootbeer.sample.R
-import com.scottyab.rootbeer.sample.RootItemResult
+import com.kimchangyoun.rootbeerFresh.sample.R
+import com.kimchangyoun.rootbeerFresh.sample.RootItemResult
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_root_check.view.*
 
 class RootItemAdapter : RecyclerView.Adapter<RootItemAdapter.RootItemVH>() {
     private val items: MutableList<RootItemResult> = mutableListOf()
@@ -45,12 +49,12 @@ class RootItemAdapter : RecyclerView.Adapter<RootItemAdapter.RootItemVH>() {
 
     class RootItemVH(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         LayoutContainer {
-
         fun bind(item: RootItemResult) {
-            containerView.rootItemText.text = item.text
-            containerView.rootItemResultIcon.update(isRooted = item.result)
+            val rootItemText = containerView.findViewById<TextView>(R.id.rootItemText)
+            val rootItemResultIcon = containerView.findViewById<ResultIconView>(R.id.rootItemResultIcon)
+
+            rootItemText.text = item.text
+            rootItemResultIcon.update(isRooted = item.result)
         }
     }
 }
-
-

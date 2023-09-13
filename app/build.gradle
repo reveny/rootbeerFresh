@@ -1,34 +1,28 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-
-
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.4'
-
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-    }
-}
-
-apply plugin: 'jacoco-android'
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion compileSdkVer
     buildToolsVersion buildToolsVer
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+
     defaultConfig {
         applicationId "com.kimchangyoun.rootbeerFresh.sample"
         minSdkVersion minSdkVer
         targetSdkVersion targetSdkVer
-        versionCode 10
-        versionName "0.0.10"
+        versionCode 11
+        versionName "0.0.11"
         vectorDrawables.useSupportLibrary = true
+
         archivesBaseName = "rootbeerFresh-$versionName-[$versionCode]"
     }
 
@@ -59,6 +53,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'com.kimchangyoun.rootbeerFresh.sample'
 }
 
 dependencies {
@@ -77,4 +72,6 @@ dependencies {
     implementation "uk.co.barbuzz:beerprogressview:$beerProgressViewVersion"
 
     implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    implementation "com.android.support:multidex:1.0.3"
 }

@@ -1,11 +1,12 @@
-package com.scottyab.rootbeer.sample
+package com.kimchangyoun.rootbeerFresh.sample
 
 import android.app.Application
 import android.os.Build
 import android.os.StrictMode
+import androidx.multidex.MultiDexApplication
 import timber.log.Timber
 
-class RootSampleApp : Application() {
+class RootSampleApp : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()

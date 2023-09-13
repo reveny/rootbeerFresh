@@ -18,8 +18,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import static com.scottyab.rootbeer.Const.BINARY_BUSYBOX;
-import static com.scottyab.rootbeer.Const.BINARY_SU;
+import static com.kimchangyoun.rootbeerFresh.Const.BINARY_BUSYBOX;
+import static com.kimchangyoun.rootbeerFresh.Const.BINARY_SU;
 
 /**
  * A simple root checker that gives an *indication* if the device is rooted or not.

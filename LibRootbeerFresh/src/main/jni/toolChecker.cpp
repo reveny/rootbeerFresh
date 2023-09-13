@@ -112,7 +112,7 @@ void strmode(mode_t mode, char * buf) {
  *
  *****************************************************************************/
 extern int stat(const char *, struct stat *);
-int checkFileStat(char *fname)
+int checkFileStat(const char *fname)
 {
     int return_stat = 0;
     struct stat file_info = { 0 };

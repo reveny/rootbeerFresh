@@ -1,4 +1,4 @@
-package com.scottyab.rootbeer.sample.ui
+package com.kimchangyoun.rootbeerFresh.sample.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope

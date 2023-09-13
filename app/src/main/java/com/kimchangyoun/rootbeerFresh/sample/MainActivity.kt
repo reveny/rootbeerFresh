@@ -1,21 +1,26 @@
-package com.scottyab.rootbeer.sample
+package com.kimchangyoun.rootbeerFresh.sample
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.scottyab.rootbeer.sample.extensions.hide
-import com.scottyab.rootbeer.sample.extensions.show
-import com.scottyab.rootbeer.sample.ui.RootItemAdapter
-import com.scottyab.rootbeer.sample.ui.ScopedActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.kimchangyoun.rootbeerFresh.sample.R.*
+import com.kimchangyoun.rootbeerFresh.sample.extensions.hide
+import com.kimchangyoun.rootbeerFresh.sample.extensions.show
+import com.kimchangyoun.rootbeerFresh.sample.ui.RootItemAdapter
+import com.kimchangyoun.rootbeerFresh.sample.ui.RootedResultTextView
+import com.kimchangyoun.rootbeerFresh.sample.ui.ScopedActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import uk.co.barbuzz.beerprogressview.BeerProgressView
 
 class MainActivity : ScopedActivity() {
 
@@ -25,28 +30,35 @@ class MainActivity : ScopedActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(layout.activity_main)
         initView()
         resetView()
     }
 
     private fun initView() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById(id.toolbar))
+        val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { checkForRoot() }
+        val rootResultsRecycler: RecyclerView = findViewById(R.id.rootResultsRecycler)
         rootResultsRecycler.layoutManager = LinearLayoutManager(this)
         rootResultsRecycler.adapter = rootItemAdapter
     }
 
     private fun resetView() {
+        val progressView: BeerProgressView = findViewById(R.id.progressView)
         progressView.max = 100
         progressView.beerProgress = 0
         progressView.show()
+
+        val isRootedTextView: View = findViewById(R.id.isRootedTextView)
         isRootedTextView.hide()
         rootItemAdapter.clear()
     }
 
     private fun checkForRoot() {
         resetView()
+
+        val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.hide()
 
         launch {
@@ -63,6 +75,7 @@ class MainActivity : ScopedActivity() {
         // this allows us to increment the progress bar for x number of times for each of the results
         // all in the effort to smooth the animation
         val multiplier = 10
+        val progressView: BeerProgressView = findViewById(R.id.progressView)
         progressView.max = results.size * multiplier
 
         launch {
@@ -97,13 +110,13 @@ class MainActivity : ScopedActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_github -> {
+            id.action_github -> {
                 val i = Intent(Intent.ACTION_VIEW)
                 i.data = Uri.parse(GITHUB_LINK)
                 startActivity(i)
                 true
             }
-            R.id.action_info -> {
+            id.action_info -> {
                 showInfoDialog()
                 true
             }
@@ -115,8 +128,8 @@ class MainActivity : ScopedActivity() {
         //do nothing if already showing
         if (infoDialog?.isShowing != true) {
             infoDialog = AlertDialog.Builder(this)
-                .setTitle(R.string.app_name)
-                .setMessage(R.string.info_details)
+                .setTitle(string.app_name)
+                .setMessage(string.info_details)
                 .setCancelable(true)
                 .setPositiveButton("ok") { dialog, _ -> dialog.dismiss() }
                 .setNegativeButton("More info") { dialog, _ ->
@@ -134,7 +147,9 @@ class MainActivity : ScopedActivity() {
     }
 
     private fun onRootCheckFinished(isRooted: Boolean) {
+        val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.show()
+        val isRootedTextView: RootedResultTextView = findViewById(R.id.isRootedTextView)
         isRootedTextView.update(isRooted = isRooted)
         isRootedTextView.show()
     }

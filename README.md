@@ -56,7 +56,7 @@ Available on [maven central](https://search.maven.org/#search%7Cga%7C1%7Ca%3A%22
 
 ```java
 dependencies {
-    implementation 'kimchangyoun:rootbeerFresh-lib:0.0.10'
+    implementation 'kimchangyoun:rootbeerFresh-lib:0.0.11'
 }
 ```
 

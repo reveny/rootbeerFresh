@@ -10,6 +10,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradlePluginVersion"
         classpath "com.github.dcendents:android-maven-gradle-plugin:$mavenGradlePluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlinVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
@@ -31,11 +32,11 @@ allprojects {
 subprojects {
     // When updating the sdk version, please remember to change the circleci image to match
     // .circle/config.yml
-    ext.compileSdkVer = 30
-    ext.buildToolsVer = "30.0.0"
+    ext.compileSdkVer = 33
+    ext.buildToolsVer = "34.0.0"
     ext.minSdkVer = 15
-    ext.targetSdkVer = 30
-    ext.ndkVersionVar = '22.1.7171670'
+    ext.targetSdkVer = 31
+    ext.ndkVersionVar = '25.2.9519653'
 }
 
 task clean(type: Delete) {

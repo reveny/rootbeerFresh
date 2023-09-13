@@ -1,11 +1,11 @@
-package com.scottyab.rootbeer.sample.ui
+package com.kimchangyoun.rootbeerFresh.sample.ui
 
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import com.scottyab.rootbeer.sample.R
+import com.kimchangyoun.rootbeerFresh.sample.R
 import timber.log.Timber
 
 class RootedResultTextView @JvmOverloads constructor(

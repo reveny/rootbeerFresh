@@ -39,13 +39,14 @@
       app:waveMax="100" />
 
     <androidx.recyclerview.widget.RecyclerView
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       android:id="@+id/rootResultsRecycler"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:paddingTop="4dp"
       tools:listitem="@layout/item_root_check" />
 
-    <com.scottyab.rootbeer.sample.ui.RootedResultTextView
+    <com.kimchangyoun.rootbeerFresh.sample.ui.RootedResultTextView
       android:id="@+id/isRootedTextView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -53,7 +54,8 @@
       android:textColor="#D50000"
       android:textSize="34sp"
       android:visibility="gone"
-      tools:visibility="visible" />
+      tools:visibility="visible"
+        tools:ignore="MissingClass" />
   </FrameLayout>
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton

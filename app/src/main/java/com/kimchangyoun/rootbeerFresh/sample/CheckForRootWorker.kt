@@ -22,7 +22,7 @@ class CheckForRootWorker(context: Context) {
         RootItemResult("Dangerous Props", rootBeer.checkForDangerousProps()),
         RootItemResult("Root via native check", rootBeer.checkForRootNative()),
         RootItemResult("SE linux Flag Is Enabled", !Utils.isSelinuxFlagInEnabled()),
-        RootItemResult("Magisk specific checks", rootBeer.checkForMagiskBinary())
+        RootItemResult("Magisk specific checks", rootBeer.checkForMagiskBinary()),
 		RootItemResult("Magisk UDS check", rootBeer.checkForMagiskNative())
     )
 }
