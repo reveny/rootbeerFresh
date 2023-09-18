@@ -155,7 +155,7 @@ class MainActivity : ScopedActivity() {
     }
 
     companion object {
-        private const val GITHUB_LINK = "https://github.com/scottyab/rootbeer"
+        private const val GITHUB_LINK = "https://github.com/KimChangYoun/rootbeerFresh"
     }
 }
 

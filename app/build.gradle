@@ -19,7 +19,7 @@ android {
         applicationId "com.kimchangyoun.rootbeerFresh.sample"
         minSdkVersion minSdkVer
         targetSdkVersion targetSdkVer
-        versionCode 11
+        versionCode 12
         versionName "0.0.11"
         vectorDrawables.useSupportLibrary = true
 
