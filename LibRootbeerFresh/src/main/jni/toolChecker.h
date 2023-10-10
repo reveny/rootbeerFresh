@@ -11,7 +11,7 @@ extern "C" {
 
 #include <jni.h>
 
-void Java_com_kimchangyoun_rootbeerFresh_RootBeerNative_setLogDebugMessages( JNIEnv* env, jobject thiz, jboolean debug);
+jint Java_com_kimchangyoun_rootbeerFresh_RootBeerNative_setLogDebugMessages( JNIEnv* env, jobject thiz, jboolean debug);
 
 int Java_com_kimchangyoun_rootbeerFresh_RootBeerNative_checkForMagiskUDS( JNIEnv* env, jobject thiz );
 

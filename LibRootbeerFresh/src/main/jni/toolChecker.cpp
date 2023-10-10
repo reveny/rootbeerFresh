@@ -47,7 +47,7 @@
 /* Set to 1 to enable debug log traces. */
 static int DEBUG = 1;
 
-/*****************************************************************************
+extern "C" /*****************************************************************************
  * Description: Sets if we should log debug messages
  *
  * Parameters: env - Java environment pointer
@@ -55,7 +55,7 @@ static int DEBUG = 1;
  * 	bool - true to log debug messages
  *
  *****************************************************************************/
-void Java_com_kimchangyoun_rootbeerFresh_RootBeerNative_setLogDebugMessages( JNIEnv* env, jobject thiz, jboolean debug)
+jint Java_com_kimchangyoun_rootbeerFresh_RootBeerNative_setLogDebugMessages( JNIEnv* env, jobject thiz, jboolean debug)
 {
   if (debug){
     DEBUG = 1;
@@ -63,6 +63,8 @@ void Java_com_kimchangyoun_rootbeerFresh_RootBeerNative_setLogDebugMessages( JNI
   else{
     DEBUG = 0;
   }
+
+  return 0;
 }
 
 
@@ -114,21 +116,16 @@ void strmode(mode_t mode, char * buf) {
 extern int stat(const char *, struct stat *);
 int checkFileStat(const char *fname)
 {
-    int return_stat = 0;
     struct stat file_info = { 0 };
-    struct passwd *my_passwd;
-    struct group  *my_group;
     mode_t file_mode;
 
     if(!fname)
     {
-        LOGD(">>>>> fname is NULL!!");
-        return -1;
+        return 0;
     }
 
-    if ((return_stat = stat(fname, &file_info)) == -1)
+    if (stat(fname, &file_info) == -1)
     {
-        LOGD(">>>>> stat() Failed!!");
         return -1;
     }
 
@@ -166,6 +163,8 @@ int checkFileStat(const char *fname)
     }
 
     /*
+    struct passwd *my_passwd;
+    struct group  *my_group;
     char buf[11] = { 0 };
     strmode(file_mode, buf);
     LOGD(">>>>> %04o is %s\n", file_mode, buf);
@@ -189,7 +188,7 @@ int checkFileStat(const char *fname)
     return 1;
 }
 
-/*****************************************************************************
+extern "C" /*****************************************************************************
  * Description: Check the Unix Domain Socket used by Magisk
  *
  * Parameters: none
@@ -279,7 +278,7 @@ int Java_com_kimchangyoun_rootbeerFresh_RootBeerNative_checkForMagiskUDS( JNIEnv
         fclose(fh);
     }
 
-    if(uds_detect_count == 0 || magisk_file_detect_count == 0) {
+    if(uds_detect_count == 0 && magisk_file_detect_count == 0) {
         result = 0;
     } else {
         result = 1;
@@ -288,7 +287,7 @@ int Java_com_kimchangyoun_rootbeerFresh_RootBeerNative_checkForMagiskUDS( JNIEnv
     return result;
 }
 
-/*****************************************************************************
+extern "C" /*****************************************************************************
  * Description: Checks for root binaries
  *
  * Parameters: env - Java environment pointer
