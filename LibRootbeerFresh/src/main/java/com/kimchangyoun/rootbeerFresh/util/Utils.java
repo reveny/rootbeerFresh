@@ -1,5 +1,7 @@
 package com.kimchangyoun.rootbeerFresh.util;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 
 public final class Utils {
@@ -16,12 +18,15 @@ public final class Utils {
      */
     public static boolean isSelinuxFlagInEnabled() {
         try {
-            Class<?> c = Class.forName("android.os.SystemProperties");
-            Method get = c.getMethod("get", String.class);
-            String selinux = (String) get.invoke(c, "ro.build.selinux");
-            return "1".equals(selinux);
-        } catch (Exception ignored) {
-
+            ProcessBuilder processBuilder = new ProcessBuilder("getenforce");
+            Process process = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line = reader.readLine();
+            reader.close();
+            process.waitFor();
+            return !"Enforcing".equalsIgnoreCase(line);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return false;
